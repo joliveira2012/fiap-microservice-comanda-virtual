@@ -1,30 +1,32 @@
-package br.com.fiap.microserve.comanda.service.impl;
+package br.com.fiap.microservice.comanda.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.fiap.microserve.comanda.dto.ComandaDTO;
-import br.com.fiap.microserve.comanda.dto.CreateComandaDTO;
-import br.com.fiap.microserve.comanda.dto.CreateProdutoDTO;
-import br.com.fiap.microserve.comanda.entity.Comanda;
-import br.com.fiap.microserve.comanda.entity.Produtos;
-import br.com.fiap.microserve.comanda.repository.ComandaRepository;
-import br.com.fiap.microserve.comanda.repository.ProdutoRepository;
-import br.com.fiap.microserve.comanda.service.IComandaService;
+import br.com.fiap.microservice.comanda.dto.ComandaDTO;
+import br.com.fiap.microservice.comanda.dto.CreateComandaDTO;
+import br.com.fiap.microservice.comanda.dto.CreateProdutoDTO;
+import br.com.fiap.microservice.comanda.entity.Comanda;
+import br.com.fiap.microservice.comanda.entity.Produtos;
+import br.com.fiap.microservice.comanda.repository.ComandaRepository;
+import br.com.fiap.microservice.comanda.repository.ProdutoRepository;
+import br.com.fiap.microservice.comanda.service.IComandaService;
 
 @Service
 public class ComandaServiceImpl implements IComandaService {
 
-	@Autowired
 	private ComandaRepository comandaRepository;
 
-	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	public ComandaServiceImpl(ComandaRepository comandaRepository, ProdutoRepository produtoRepository) {
+		this.comandaRepository = comandaRepository;
+		this.produtoRepository = produtoRepository;
+	}
 
 	@Override
 	public List<ComandaDTO> findAll() {

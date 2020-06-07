@@ -50,3 +50,9 @@ Para iniciar a aplicação, ir no pacote `br.com.fiap.microservice.comanda` exis
 ![Postman](arquivos_uteis/swagger.png)
 
 ----
+
+## Testes
+
+![Postman](arquivos_uteis/testes.png)
+
+----

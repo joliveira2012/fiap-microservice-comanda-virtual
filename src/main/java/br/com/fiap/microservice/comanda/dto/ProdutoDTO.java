@@ -1,9 +1,9 @@
-package br.com.fiap.microserve.comanda.dto;
+package br.com.fiap.microservice.comanda.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import br.com.fiap.microserve.comanda.entity.Produtos;
+import br.com.fiap.microservice.comanda.entity.Produtos;
 
 public class ProdutoDTO implements Serializable {
 

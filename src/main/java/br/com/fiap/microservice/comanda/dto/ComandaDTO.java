@@ -1,12 +1,14 @@
-package br.com.fiap.microserve.comanda.dto;
+package br.com.fiap.microservice.comanda.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import br.com.fiap.microserve.comanda.entity.Comanda;
-import br.com.fiap.microserve.comanda.entity.Produtos;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.fiap.microservice.comanda.entity.Comanda;
+import br.com.fiap.microservice.comanda.entity.Produtos;
 
 public class ComandaDTO implements Serializable {
 
@@ -14,6 +16,7 @@ public class ComandaDTO implements Serializable {
 
 	private Integer id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	private Date dataCompra;
 
 	private List<ProdutoDTO> produtos = new ArrayList<ProdutoDTO>();

@@ -1,4 +1,4 @@
-package br.com.fiap.microserve.comanda.dto;
+package br.com.fiap.microservice.comanda.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

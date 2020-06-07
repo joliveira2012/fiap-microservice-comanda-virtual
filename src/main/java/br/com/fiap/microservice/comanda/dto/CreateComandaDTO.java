@@ -1,4 +1,4 @@
-package br.com.fiap.microserve.comanda.dto;
+package br.com.fiap.microservice.comanda.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +12,14 @@ public class CreateComandaDTO implements Serializable {
 	private Date dataCompra;
 
 	private List<CreateProdutoDTO> produtos = new ArrayList<CreateProdutoDTO>();
+
+	public CreateComandaDTO() {
+	}
+
+	public CreateComandaDTO(Date dataCompra, List<CreateProdutoDTO> produtos) {
+		this.dataCompra = dataCompra;
+		this.produtos = produtos;
+	}
 
 	public Date getDataCompra() {
 		return dataCompra;

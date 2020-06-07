@@ -1,4 +1,4 @@
-package br.com.fiap.microserve.comanda.controller;
+package br.com.fiap.microservice.comanda.controller;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.fiap.microserve.comanda.dto.ComandaDTO;
-import br.com.fiap.microserve.comanda.dto.CreateComandaDTO;
-import br.com.fiap.microserve.comanda.service.IComandaService;
+import br.com.fiap.microservice.comanda.dto.ComandaDTO;
+import br.com.fiap.microservice.comanda.dto.CreateComandaDTO;
+import br.com.fiap.microservice.comanda.service.IComandaService;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -39,9 +39,10 @@ public class ComandaController {
 	}
 
 	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<ComandaDTO> create(@RequestBody CreateComandaDTO createcomandaDTO,
 			UriComponentsBuilder builder) {
-		return ResponseEntity.ok(comandaService.create(createcomandaDTO));
+		return new ResponseEntity<>(comandaService.create(createcomandaDTO), HttpStatus.CREATED);
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)

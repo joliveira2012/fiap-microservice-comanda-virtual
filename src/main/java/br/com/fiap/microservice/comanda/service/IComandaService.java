@@ -1,9 +1,9 @@
-package br.com.fiap.microserve.comanda.service;
+package br.com.fiap.microservice.comanda.service;
 
 import java.util.List;
 
-import br.com.fiap.microserve.comanda.dto.ComandaDTO;
-import br.com.fiap.microserve.comanda.dto.CreateComandaDTO;
+import br.com.fiap.microservice.comanda.dto.ComandaDTO;
+import br.com.fiap.microservice.comanda.dto.CreateComandaDTO;
 
 public interface IComandaService {
 

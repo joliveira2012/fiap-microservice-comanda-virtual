@@ -1,4 +1,4 @@
-package br.com.fiap.microserve.comanda.entity;
+package br.com.fiap.microservice.comanda.entity;
 
 import java.math.BigDecimal;
 
@@ -9,8 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.fiap.microserve.comanda.dto.CreateProdutoDTO;
-import br.com.fiap.microserve.comanda.dto.ProdutoDTO;
+import br.com.fiap.microservice.comanda.dto.CreateProdutoDTO;
+import br.com.fiap.microservice.comanda.dto.ProdutoDTO;
 
 @Entity
 @Table(name = "produtos")

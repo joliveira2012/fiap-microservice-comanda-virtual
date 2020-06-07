@@ -1,4 +1,4 @@
-package br.com.fiap.microserve.comanda.entity;
+package br.com.fiap.microservice.comanda.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.com.fiap.microserve.comanda.dto.ComandaDTO;
-import br.com.fiap.microserve.comanda.dto.CreateComandaDTO;
-import br.com.fiap.microserve.comanda.dto.ProdutoDTO;
+import br.com.fiap.microservice.comanda.dto.ComandaDTO;
+import br.com.fiap.microservice.comanda.dto.CreateComandaDTO;
+import br.com.fiap.microservice.comanda.dto.ProdutoDTO;
 
 @Entity
 @Table(name = "comanda")

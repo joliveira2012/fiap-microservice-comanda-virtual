@@ -1,4 +1,4 @@
-package br.com.fiap.microserve.comanda.config;
+package br.com.fiap.microservice.comanda.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
