@@ -30,6 +30,7 @@ class Pedidos extends Component {
             requests: []
         };
         this.amountCharge = this.state.availableProducts[0].number;
+        this.accCharge = 0;
     };
     componentWillMount = () => {
         this.handleChangeProduct(0);
@@ -79,8 +80,8 @@ class Pedidos extends Component {
         if (event !== 0)
             idx = event.target.value
         else
-            idx = 0        
-            
+            idx = 0
+
         for (let i = 1; i <= availableProducts[idx].number; i++) {
             listNumberOfProducts.push(i);
         }
@@ -95,7 +96,7 @@ class Pedidos extends Component {
         this.setState({ amountSelectedProduct: numberSelectedProducts })
     }
 
-    buyProduct = () => {
+    addProduct = () => {
         let { requests, availableProducts, amountSelectedProduct, IdSelectedProduct } = this.state
 
         requests.push({
@@ -103,6 +104,16 @@ class Pedidos extends Component {
             numberOfProducts: amountSelectedProduct,
             amountValue: this.amountCharge
         })
+        if (requests.length > 1) {
+            this.accCharge = requests.reduce(function (accumulator, currentValue) {
+                return accumulator + currentValue.amountValue;
+            }, 0)
+            console.log(requests)
+            console.log("accCharge")
+            console.log(this.accCharge)
+        } else {
+            this.accCharge = this.amountCharge;
+        }
 
         this.setState({ requests })
     }
@@ -145,7 +156,7 @@ class Pedidos extends Component {
 
                                     <p><b className="success">R$ {this.amountCharge}</b></p>
 
-                                    <button className="button-add" onClick={this.buyProduct}>+</button>
+                                    <button className="button-add" onClick={this.addProduct}>+</button>
                                 </> : <p><b className="error">Não temos em estoque!</b></p>
                             }
                         </div>
@@ -159,16 +170,22 @@ class Pedidos extends Component {
                                                     <p className="w100 flex-space-between mb1">
                                                         <><b>Produto:</b> {request.name}</>
                                                         <><b>Quantidade:</b> {request.numberOfProducts}</>
-                                                        <><b>Valor unitário:</b> R${request.amountValue}</>
+                                                        <><b>Valor:</b> R${request.amountValue}</>
                                                         <img className=" mt1" src={del} onClick={() => this.delProducts(index)} alt="logo-del" height="20px" width="20px" />
                                                     </p>
                                                 </div>
                                             </div>
                                         );
                                     })}
+                                    <div className="card-success">
+                                        <div className="card-body">
+                                            <p className="w100 flex-space-between mb1">
+                                                <><b>TOTAL:</b> {this.accCharge}</>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button onClick={this.finishShopping}>FINALIZAR COMPRA</button>
                                 </> : <p className="success mb5"><b>Nenhum pedido!</b></p>}
-
-                            <button onClick={this.finishShopping}>FINALIZAR COMPRA</button>
                         </div>
                     </div>
                 </header>

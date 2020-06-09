@@ -24,6 +24,16 @@ label {
   border-radius: 2%;
 }
 
+.card-success {
+  width: 96%;
+  padding: 10px;
+  flex-direction: row;
+  margin-bottom: 20px;
+  text-align: start;
+  background-color: #E6C972;
+  border-radius: 2%;
+}
+
 .command {
   border-radius: 2%;
   border: 2px solid #E6C972;
