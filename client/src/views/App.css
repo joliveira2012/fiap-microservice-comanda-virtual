@@ -1,0 +1,47 @@
+.pedidos{
+  background-color: #282c34;
+}
+
+p,
+label {
+  color: black;
+  font-size: 0.9em !important;
+  margin: 0;
+}
+
+.pedidos-container{
+  margin: 0% 5% 0;
+  width: 50%;
+  
+}
+.card {
+  width: 96%;
+  padding: 10px;
+  flex-direction: row;
+  margin-bottom: 20px;
+  text-align: start;
+  background-color: #ffffff;
+  border-radius: 2%;
+}
+
+.card-success {
+  width: 96%;
+  padding: 10px;
+  flex-direction: row;
+  margin-bottom: 20px;
+  text-align: start;
+  background-color: #E6C972;
+  border-radius: 2%;
+}
+
+.command-item {
+  border-radius: 2%;
+  border: 2px solid #E6C972;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.command {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
