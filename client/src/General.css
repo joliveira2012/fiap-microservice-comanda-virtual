@@ -1,0 +1,137 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(5px + 2vmin);
+  color: white;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button {
+  background-color: #E6C972;
+  border-radius: 12px;
+  padding: 10px 24px;
+  font-weight: 800;
+  color: black;
+  border-color: black;
+}
+
+.button-add {
+  background-color: #E6C972;
+  height: min-content;
+  border-radius: 12px;
+  padding: 0px 5px 0px 5px;
+  font-weight: 800;
+  color: black;
+  border-color: black;
+}
+
+input {
+  border-radius: 2px;
+}
+
+select {
+  height: min-content;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.w90 {
+  width: 90%;
+}
+
+.w50 {
+  width: 50%;
+}
+
+.mt1 {
+  margin-top: 1%;
+}
+
+.mt3 {
+  margin-top: 3%;
+}
+
+.mt5 {
+  margin-top: 5%;
+}
+
+.mt10 {
+  margin-top: 10%;
+}
+
+.mt20 {
+  margin-top: 20%;
+}
+
+.mb5 {
+  margin-bottom: 5%;
+}
+
+.mb1 {
+  margin-bottom: 1%;
+}
+
+.mr5 {
+  margin-right: 5%;
+}
+
+.ml3 {
+  margin-left: 5%;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.success {
+  color: #E6C972;
+}
+
+.error {
+  color: red;
+}
