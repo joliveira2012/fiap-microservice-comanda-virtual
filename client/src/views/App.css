@@ -34,9 +34,14 @@ label {
   border-radius: 2%;
 }
 
-.command {
+.command-item {
   border-radius: 2%;
   border: 2px solid #E6C972;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+.command {
+  display: flex;
+  flex-wrap: wrap-reverse;
 }

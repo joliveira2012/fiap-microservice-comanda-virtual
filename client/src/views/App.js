@@ -24,58 +24,112 @@ class Pedidos extends Component {
                     unitValue: 15.00
                 },
             ],
+            baseUrl: "http://localhost:8080/v1/comanda",
+            showSuccessScreen: false,
             IdSelectedProduct: 0,
             amountSelectedProduct: 1,
             listNumberOfProducts: [],
-            requests: []
+            requests: [],
+            commands: []
         };
         this.amountCharge = this.state.availableProducts[0].number;
         this.accCharge = 0;
     };
+
     componentWillMount = () => {
         this.handleChangeProduct(0);
     }
-    /*
-        getRequests = () => {
-            fetch("http://localhost:8080/v1/pedidos/cliente/1", {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                },
-            }).then((response) => response.json()
-                .then((data) => {
-                    this.setState({ requests: data })
-                })
-            ).catch(
-                error => {
-                    console.log(error)
-                    this.setState({ result: "Erro ao consultar produtos!" })
-                }
-            );
-        }
-    
-        deleteRequest = (idRequest) => {
-            fetch("http://localhost:8080/v1/pedidos/" + idRequest, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            }).then(function (response) {
-                if (!response.ok) {
-                    console.log("Falha ao deletar pedido n°" + idRequest);
-                }
-            }).then(() => this.getRequests()
-            ).catch(
-                error => {
-                    console.log(error)
-                }
-            );
-        }*/
+
+    getDate() {
+        let date = new Date();
+        var dateStr =
+            date.getFullYear() + "-" +
+            ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
+            ("00" + date.getDate()).slice(-2) + "T" +
+            ("00" + date.getHours()).slice(-2) + ":" +
+            ("00" + date.getMinutes()).slice(-2) + ":" +
+            ("00" + date.getSeconds()).slice(-2);
+        return dateStr;
+    }
+
+    openUserCommand = () => {
+        let { requests } = this.state
+
+        let products = [];
+        requests.forEach((req, index) => {
+            products[index] = {
+                nome: req.name,
+                quantidade: req.numberOfProducts,
+                preco: req.amountValue
+            }
+        })
+
+        let body = JSON.stringify({
+            dataCompra: this.getDate(),
+            produtos: products
+        });
+
+        fetch(this.state.baseUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: body,
+        }).then((response) => response.json()
+            .then(() => {
+                this.getCommands();
+            })
+        ).catch(
+            error => {
+                console.log(error)
+                this.setState({ result: "Erro ao consultar produtos!" })
+            }
+        );
+    }
+
+    getCommands() {
+        fetch(this.state.baseUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+        }).then((response) => response.json()
+            .then((commands) => {
+                this.setState({ commands, showSuccessScreen: true })
+            })
+        ).catch(
+            error => {
+                console.log(error)
+                this.setState({ result: "Erro ao consultar comandas!" })
+            }
+        );
+
+    }
+
+
+    finishUserCommand = (idCommand) => {
+        fetch(this.state.baseUrl +"/"+ idCommand, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(function (response) {
+            if (!response.ok) {
+                console.log("Falha ao deletar a comanda n°" + idCommand);
+            }
+        }).then(() => this.getCommands()
+        ).catch(
+            error => {
+                console.log(error)
+            }
+        );
+    }
+
     handleChangeProduct = (event) => {
         let { listNumberOfProducts, availableProducts, amountSelectedProduct } = this.state
         let idx = null
-        console.log(event);
 
         if (event !== 0)
             idx = event.target.value
@@ -118,79 +172,114 @@ class Pedidos extends Component {
         this.setState({ requests })
     }
 
-    delProducts = (idx) => {
+    delProducts = (idx, productValue) => {
         let { requests } = this.state
         requests.splice(idx)
+        this.accCharge = this.accCharge - productValue;
         this.setState({ requests })
     }
 
+    getTotalValue (products) {
+        return products.reduce(function (accumulator, currentValue) {
+            return accumulator + currentValue.preco;
+        }, 0)
+    }
+
     render() {
-        let { availableProducts, IdSelectedProduct, listNumberOfProducts, amountSelectedProduct, requests } = this.state
+        let { availableProducts,
+            IdSelectedProduct,
+            listNumberOfProducts,
+            amountSelectedProduct,
+            requests,
+            commands,
+            showSuccessScreen } = this.state
 
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <h1 className="success">Comanda</h1>
-                    <div className="pedidos-container">
-                        <div className="flex-space-between">
-
-                            <p><b className="success">Escolha o produto:</b></p>
-                            <select value={IdSelectedProduct} onChange={this.handleChangeProduct}>
-                                {availableProducts.map((product, index) => {
+        if (showSuccessScreen) {
+            return (
+                <div className="App">
+                    <header className="App-header">
+                        <h1 className="success">Comanda Aberta</h1>
+                        <div className="pedidos-container">
+                            <div className="flex-center command">
+                                {commands.map((command, index) => {
                                     return (
-                                        <option key={index} value={index}>{product.name}</option>
-                                    );
+                                        <div key={index} className="card mr5">
+                                            
+                                            <p className="w100 flex-space-between"><b>A comanda {command.id} deve o valor: R${this.getTotalValue(command.produtos)}</b>
+                                            <button className="button-add" onClick={() => this.finishUserCommand(command.id)}>PAGA!</button></p>
+                                        </div>
+                                    )
                                 })}
-                            </select>
-
-                            {availableProducts[IdSelectedProduct].number > 0 ?
-                                <>
-                                    <p><b className="success">Escolha a quantidade:</b></p>
-                                    <select value={amountSelectedProduct} onChange={this.handleChangeAmountProducts}>
-                                        {listNumberOfProducts.map((amount, index) => {
-                                            return (
-                                                <option key={index} value={amount}>{amount}</option>
-                                            );
-                                        })}
-                                    </select>
-
-                                    <p><b className="success">R$ {this.amountCharge}</b></p>
-
-                                    <button className="button-add" onClick={this.addProduct}>+</button>
-                                </> : <p><b className="error">Não temos em estoque!</b></p>
-                            }
+                            </div>
                         </div>
-                        <div className="command">
-                            {requests.length > 0 ?
-                                <>
-                                    {requests.map((request, index) => {
+                    </header>
+                </div>
+            );
+        } else {
+            return (
+                <div className="App">
+                    <header className="App-header">
+                        <h1 className="success">Comanda</h1>
+                        <div className="pedidos-container">
+                            <div className="flex-space-between">
+                                <p><b className="success">Escolha o produto:</b></p>
+                                <select value={IdSelectedProduct} onChange={this.handleChangeProduct}>
+                                    {availableProducts.map((product, index) => {
                                         return (
-                                            <div key={index} className="card">
-                                                <div className="card-body">
-                                                    <p className="w100 flex-space-between mb1">
-                                                        <><b>Produto:</b> {request.name}</>
-                                                        <><b>Quantidade:</b> {request.numberOfProducts}</>
-                                                        <><b>Valor:</b> R${request.amountValue}</>
-                                                        <img className=" mt1" src={del} onClick={() => this.delProducts(index)} alt="logo-del" height="20px" width="20px" />
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            <option key={index} value={index}>{product.name}</option>
                                         );
                                     })}
-                                    <div className="card-success">
-                                        <div className="card-body">
-                                            <p className="w100 flex-space-between mb1">
-                                                <><b>TOTAL:</b> {this.accCharge}</>
-                                            </p>
+                                </select>
+
+                                {availableProducts[IdSelectedProduct].number > 0 ?
+                                    <>
+                                        <p><b className="success">Escolha a quantidade:</b></p>
+                                        <select value={amountSelectedProduct} onChange={this.handleChangeAmountProducts}>
+                                            {listNumberOfProducts.map((amount, index) => {
+                                                return (
+                                                    <option key={index} value={amount}>{amount}</option>
+                                                );
+                                            })}
+                                        </select>
+
+                                        <p><b className="success">R$ {this.amountCharge}</b></p>
+
+                                        <button className="button-add" onClick={this.addProduct}>+</button>
+                                    </> : <p><b className="error">Não temos em estoque!</b></p>
+                                }
+                            </div>
+                            <div className="command-item">
+                                {requests.length > 0 ?
+                                    <>
+                                        {requests.map((request, index) => {
+                                            return (
+                                                <div key={index} className="card">
+                                                    <div className="card-body">
+                                                        <p className="w100 flex-space-between mb1">
+                                                            <><b>Produto:</b> {request.name}</>
+                                                            <><b>Qtde:</b> {request.numberOfProducts}</>
+                                                            <><b>Valor:</b> R${request.amountValue}</>
+                                                            <img className=" mt1" src={del} onClick={() => this.delProducts(index, request.amountValue)} alt="logo-del" height="20px" width="20px" />
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                        <div className="card-success">
+                                            <div className="card-body">
+                                                <p className="w100 flex-space-between mb1">
+                                                    <><b>TOTAL:</b> {this.accCharge}</>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <button onClick={this.finishShopping}>FINALIZAR COMPRA</button>
-                                </> : <p className="success mb5"><b>Nenhum pedido!</b></p>}
+                                        <button onClick={this.openUserCommand}>CRIAR COMANDA</button>
+                                    </> : <p className="success mb5"><b>Nenhum pedido!</b></p>}
+                            </div>
                         </div>
-                    </div>
-                </header>
-            </div>
-        );
+                    </header>
+                </div>
+            );
+        }
 
     }
 }
