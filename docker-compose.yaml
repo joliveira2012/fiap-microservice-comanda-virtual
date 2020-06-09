@@ -1,0 +1,40 @@
+version: '3'
+services: 
+  comanda-api: 
+    image: comanda_virtual/api
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    networks:
+      - elk
+    links: 
+      - db
+  db:
+    image: mysql:5.6
+    ports:
+      - '3306:3306'
+    environment: 
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=comanda_virtual
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./docker/volume_mysql:/var/lib/mysql
+    networks:
+      - elk
+  app:
+    container_name: dockerized-react-app
+    build:
+        context: .
+        dockerfile: Dockerfile
+    volumes:
+        - '.:/app'
+        - '/app/node_modules'
+    ports:
+        - '3001:3000'
+    environment:
+        - NODE_ENV=development
+    networks:
+      - elk
+networks:
+  elk:
