@@ -5,6 +5,7 @@
 Tecnologias necessárias:
 
 - Back-end
+
   1 - Para executar o projeto é necessário ter o JRE 8 ou JDK 8 instalado.
   
   2 - Utilizar uma IDE para execução. (Eclipse é recomendado)
@@ -12,6 +13,7 @@ Tecnologias necessárias:
   3 - Necessário ter MySQL instalado.
   
 - Front-end
+
   1 - Para executar o projeto é necessário ter o gerenciador de pacotes npm instalado
   
 ---
