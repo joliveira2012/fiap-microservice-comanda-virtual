@@ -22,19 +22,5 @@ services:
       - ./docker/volume_mysql:/var/lib/mysql
     networks:
       - elk
-  client:
-    container_name: dockerized-react-app
-    build:
-        context: .
-        dockerfile: Dockerfile
-    volumes:
-        - '.:/app'
-        - '/app/node_modules'
-    ports:
-        - '3001:3000'
-    environment:
-        - NODE_ENV=development
-    networks:
-      - elk
 networks:
   elk:
