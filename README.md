@@ -41,7 +41,7 @@ $ git clone https://github.com/camisbressan/fiap-microservice-comanda-virtual.gi
 Para iniciar a aplicação, ir no pacote `br.com.fiap.microservice.comanda` existe um arquivo chamado `ComandaApplication.java`. Clique com o botão direito e execute em Run.
 
 - Front-end
-Ao abrir o projeto, entre na pasta `client` pelo terminal e execute  ```sh npm install```
+Ao abrir o projeto, entre na pasta `client` pelo terminal e execute `npm install`
 
 ----
 ## Modelo de Dados
