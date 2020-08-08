@@ -11,5 +11,4 @@ public class ComandaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ComandaApplication.class, args);
 	}
-
 }
